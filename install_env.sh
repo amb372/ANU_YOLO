@@ -5,17 +5,10 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# 1) Setting Paths
 MINIFORGE_DIR="$HOME/miniforge"
 ENV_NAME="yolo"
 PYTHON_VER="3.10"
-
-echo "🔄 1) Update apt & install prerequisites…"
-sudo apt-get update -qq
-sudo apt-get install -y \
-  wget bzip2 build-essential cmake \
-  libjpeg-dev libpng-dev libtiff-dev \
-  libavcodec-dev libavformat-dev libswscale-dev ffmpeg \
-  git ca-certificates
 
 echo
 # detect Pi arch
