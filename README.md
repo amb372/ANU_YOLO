@@ -36,6 +36,7 @@ sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure keyboard-configuration
 sudo udevadm trigger --subsystem-match=input --action=change
 sudo reboot
 ```
+After rebooting, if your Raspberry Pi survives ......
 
 ## Clone this repo and prepare env
 
@@ -45,4 +46,12 @@ cd YOLO
 # Installing the environment
 chmod +x install_env.sh
 ./install_env.sh
+```
+This should automatically downlaod and set everything up!
+
+Now let's download the YOLO system and install necessary libraries
+```bash
+conda create -n yolo python-3.10
+conda activate yolo
+pip install opencv-python ultralytics face-recognition
 ```
