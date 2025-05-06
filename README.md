@@ -37,7 +37,7 @@ sudo udevadm trigger --subsystem-match=input --action=change
 sudo reboot
 ```
 
-## Clone this repo
+## Clone this repo and prepare env
 
 ```bash
 git clone https://www.github.com/1ssb/ANU_YOLO
