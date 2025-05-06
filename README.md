@@ -55,3 +55,9 @@ conda create -n yolo python-3.10
 conda activate yolo
 pip install opencv-python ultralytics face-recognition
 ```
+
+## Task
+
+Count the number apples falling in the video: apples.mp4
+
+Credits: https://www.istockphoto.com/video/gala-apple-falling-gm472985251-20196243?utm_source=pixabay&utm_medium=affiliate&utm_campaign=sponsored_video&utm_content=srp_topbanner_media&utm_term=apple+fall
