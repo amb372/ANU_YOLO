@@ -1,92 +1,87 @@
 #!/usr/bin/env python3
 """
-face_recognition.py
+face_detection.py
 
-Detects faces in an image or video, recognizes them against a gallery, 
-draws bounding boxes with names, and saves the annotated output.
+Detects faces in an image or video, draws bounding boxes around them,
+and saves the annotated output.
 
 Usage:
     # Image:
-    python face_recognition.py --source path/to/image.jpg \
-        --known_dir path/to/known_faces/ \
-        --output path/to/out.jpg
+    python face_detection.py --source path/to/image.jpg --output path/to/out.jpg
 
     # Video:
-    python face_recognition.py --source path/to/video.mp4 \
-        --known_dir path/to/known_faces/ \
-        --output path/to/out.mp4
+    python face_detection.py --source path/to/video.mp4 --output path/to/out.mp4
 """
 
-import os
 import cv2
 import argparse
-import face_recognition
+import sys
 
-def load_known_faces(known_dir):
-    encodings, names = [], []
-    for fname in os.listdir(known_dir):
-        path = os.path.join(known_dir, fname)
-        name, ext = os.path.splitext(fname)
-        if ext.lower() not in ['.jpg', '.jpeg', '.png']:
-            continue
-        image = face_recognition.load_image_file(path)
-        face_locs = face_recognition.face_locations(image)
-        if not face_locs:
-            continue
-        enc = face_recognition.face_encodings(image, known_face_locations=face_locs)[0]
-        encodings.append(enc)
-        names.append(name)
-    return encodings, names
+def load_detector():
+    # Uses OpenCV's built-in Haar cascade. Adjust path if needed.
+    cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    detector = cv2.CascadeClassifier(cascade_path)
+    if detector.empty():
+        print(f"Error loading cascade at {cascade_path}", file=sys.stderr)
+        sys.exit(1)
+    return detector
 
-def process_frame(frame, known_encs, known_names):
-    rgb = frame[:, :, ::-1]
-    locs = face_recognition.face_locations(rgb)
-    encs = face_recognition.face_encodings(rgb, locs)
-    for (top, right, bottom, left), enc in zip(locs, encs):
-        matches = face_recognition.compare_faces(known_encs, enc, tolerance=0.5)
-        name = "Unknown"
-        if True in matches:
-            idx = matches.index(True)
-            name = known_names[idx]
-        cv2.rectangle(frame, (left, top), (right, bottom), (0,255,0), 2)
-        cv2.putText(frame, name, (left, top-10),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1)
+def process_frame(frame, detector):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = detector.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30),
+        flags=cv2.CASCADE_SCALE_IMAGE
+    )
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
     return frame
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('--source', required=True, help='Image or video path')
-    p.add_argument('--known_dir', required=True, help='Folder of known faces')
-    p.add_argument('--output', required=True, help='Output path')
+    p.add_argument('--source', required=True,
+                   help='Path to input image or video')
+    p.add_argument('--output', required=True,
+                   help='Path to save annotated output')
     args = p.parse_args()
 
-    known_encs, known_names = load_known_faces(args.known_dir)
+    detector = load_detector()
 
-    # Image?
-    if args.source.lower().endswith(('.jpg','.jpeg','.png')):
+    # Image case
+    if args.source.lower().endswith(('.jpg', '.jpeg', '.png')):
         img = cv2.imread(args.source)
-        out = process_frame(img, known_encs, known_names)
+        if img is None:
+            print(f"Error reading image {args.source}", file=sys.stderr)
+            sys.exit(1)
+        out = process_frame(img, detector)
         cv2.imwrite(args.output, out)
-        print(f"Saved annotated image to {args.output}")
+        print(f"Annotated image saved to {args.output}")
         return
 
-    # Otherwise assume video
+    # Video case
     cap = cv2.VideoCapture(args.source)
+    if not cap.isOpened():
+        print(f"Error opening video {args.source}", file=sys.stderr)
+        sys.exit(1)
+
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
-    w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    vw = cv2.VideoWriter(args.output, fourcc, fps, (w,h))
+    fps    = cap.get(cv2.CAP_PROP_FPS) or 25.0
+    width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    writer = cv2.VideoWriter(args.output, fourcc, fps, (width, height))
 
     while True:
         ret, frame = cap.read()
-        if not ret: break
-        annotated = process_frame(frame, known_encs, known_names)
-        vw.write(annotated)
+        if not ret:
+            break
+        annotated = process_frame(frame, detector)
+        writer.write(annotated)
 
     cap.release()
-    vw.release()
-    print(f"Saved annotated video to {args.output}")
+    writer.release()
+    print(f"Annotated video saved to {args.output}")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
