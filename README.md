@@ -29,6 +29,8 @@ This repository provides scripts for running YOLOv8-based face and object detect
 
 ## Installation
 
+### 0. Setup the Pi and hook it up to the monitors and make sure the display is working.
+
 ### 1. System Preparation
 Open a terminal and execute the following commands in order:
 
