@@ -1,5 +1,5 @@
 # ANU_YOLO
-YOLO scripts and env setups on Raspberry Pi OS....
+YOLO scripts and env setups on Raspberry Pi OS....Fork the Repo first.
 
 ## Instructions
 
@@ -58,8 +58,10 @@ conda activate yolo
 pip install opencv-python ultralytics face-recognition
 ```
 
-## Task
+## Group Task
 
-Count the number apples falling in the video: apples.mp4
+Count the number apples in the video: apples.mp4. Push your script as apples.py one per team write the name of the team here and your partners:
+
+...
 
 Credits: https://www.istockphoto.com/video/gala-apple-falling-gm472985251-20196243?utm_source=pixabay&utm_medium=affiliate&utm_campaign=sponsored_video&utm_content=srp_topbanner_media&utm_term=apple+fall
