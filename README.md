@@ -58,6 +58,11 @@ conda activate yolo
 pip install opencv-python ultralytics face-recognition
 ```
 
+##### Download the face detector weights from: https://github.com/lindevs/yolov8-face
+
+##### Ultralytics Documentation: https://docs.ultralytics.com/models/yolov8/  
+
+
 ## Group Task
 
 Count the number apples in the video: apples.mp4. Push your script as apples.py one per team write the name of the team here and your partners:
