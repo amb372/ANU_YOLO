@@ -3,7 +3,7 @@ YOLO scripts and env setups on Raspberry Pi OS....
 
 ## Instructions
 
-Open a terminal and copuy and execute the following. Be careful to not change the order!
+Open a terminal and copy and execute the following command sets. Be careful to not change the order!
 
 ```bash
 echo "1) Update & upgrade system…"
