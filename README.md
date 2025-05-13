@@ -1,7 +1,9 @@
 # ANU_YOLO
-YOLO scripts and env setups on Raspberry Pi OS
+YOLO scripts and env setups on Raspberry Pi OS....
 
 ## Instructions
+
+Open a terminal and copuy and execute the following. Be careful to not change the order!
 
 ```bash
 echo "1) Update & upgrade system…"
