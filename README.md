@@ -132,3 +132,4 @@ Credits for video: https://www.istockphoto.com/video/gala-apple-falling-gm472985
 - YOLOv8 by Ultralytics: https://docs.ultralytics.com/models/yolov8/
 - Face model weights: https://github.com/lindevs/yolov8-face
 - [Josh Starmer: Videos](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) --> I went to LSE to study Machine Learning in 2019 only to end up watching his videos for the exams.
+- ChatGPT for a faux annotated image used in the presentation.
