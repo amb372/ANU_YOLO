@@ -1,0 +1,14 @@
+*.pt
+*.pt.gz
+*.pt.zip
+*.pt.tar
+*.pt.tar.gz
+*.pt.tar.zip
+*.pt.tar.tar
+
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz

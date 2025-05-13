@@ -1,9 +1,36 @@
 # ANU_YOLO
-YOLO scripts and env setups on Raspberry Pi OS....Fork the Repo first.
 
-## Instructions
+A collection of YOLO-based scripts and environment setups for face and object detection, designed for use on Raspberry Pi OS and other Linux systems.
 
-Open a terminal and copy and execute the following command sets. Be careful to not change the order!
+---
+
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Model Weights](#model-weights)
+- [Usage](#usage)
+- [Group Task](#group-task)
+- [Credits](#credits)
+
+---
+
+## Project Overview
+This repository provides scripts for running YOLOv8-based face and object detection on images and videos. The main script, `yolo_face.py`, detects faces using a YOLOv8 model and outputs annotated images or videos with bounding boxes and confidence scores.
+
+---
+
+## Prerequisites
+- Raspberry Pi OS or any modern Linux distribution
+- Python 3.10 or higher (recommended: use Micromamba/Miniconda)
+- Git
+
+---
+
+## Installation
+
+### 1. System Preparation
+Open a terminal and execute the following commands in order:
 
 ```bash
 echo "1) Update & upgrade system…"
@@ -30,43 +57,74 @@ sudo dpkg --configure -a
 sudo apt-get install -f -y -qq
 
 echo "6) Switch keyboard layout to US…"
-# Update the default keyboard configuration
 sudo sed -i 's/^XKBLAYOUT=.*/XKBLAYOUT="us"/' /etc/default/keyboard
-# Reconfigure keyboard without interactive prompts
 sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure keyboard-configuration
-# Apply immediately
 sudo udevadm trigger --subsystem-match=input --action=change
 sudo reboot
 ```
-After rebooting, if your Raspberry Pi survives ......
 
-## Clone this repo and prepare env
+After rebooting, continue with the steps below.
+
+### 2. Clone the Repository and Set Up the Environment
 
 ```bash
-git clone https://www.github.com/1ssb/ANU_YOLO
-cd YOLO
-# Installing the environment
+git clone https://www.github.com/<your_username>/ANU_YOLO
+cd ANU_YOLO
 chmod +x install_env.sh
-./install_env.sh
+./install_env.sh # Installs Miniconda and everything that you do not need to worry about
 ```
-This should automatically downlaod and set everything up!
 
-Now let's download the YOLO system and install necessary libraries
+This script will install most required dependencies automatically.
+
+### 3. (Optional) Create a Conda Environment
+
 ```bash
-conda create -n yolo python-3.10
+conda create -n yolo python=3.10
 conda activate yolo
 pip install opencv-python ultralytics face-recognition
 ```
 
-##### Download the face detector weights from: https://github.com/lindevs/yolov8-face
+---
 
-##### Ultralytics Documentation: https://docs.ultralytics.com/models/yolov8/  
+## Model Weights
 
+Download the YOLOv8 face detector weights from the official repository:
+- [lindevs/yolov8-face](https://github.com/lindevs/yolov8-face)
+
+Place the downloaded weights file (e.g., `yolov8n-face-lindevs.pt`) in the project root directory.
+
+---
+
+## Usage
+
+### Face Detection on Images
+
+```bash
+python yolo_face.py --source bus.jpg --output bus_face.jpg
+```
+- Input: `bus.jpg` (or any image file)
+- Output: `bus_face.jpg` (annotated image with bounding boxes and confidence values)
+
+### Face Detection on Videos
+
+```bash
+python yolo_face.py --source path/to/video.mp4 --output path/to/output.mp4
+```
+- Input: Any video file
+- Output: Annotated video with detected faces
+
+---
 
 ## Group Task
 
-Count the number apples in the video: apples.mp4. Push your script as apples.py one per team write the name of the team here and your partners:
+Count the number of apples in the video: `apples.mp4`. Submit your script as `apples.py` (one per team). Please list your team name and members here:
 
 ...
 
-Credits: https://www.istockphoto.com/video/gala-apple-falling-gm472985251-20196243?utm_source=pixabay&utm_medium=affiliate&utm_campaign=sponsored_video&utm_content=srp_topbanner_media&utm_term=apple+fall
+Credits for video: https://www.istockphoto.com/video/gala-apple-falling-gm472985251-20196243?utm_source=pixabay&utm_medium=affiliate&utm_campaign=sponsored_video&utm_content=srp_topbanner_media&utm_term=apple+fall
+
+---
+
+## Credits
+- YOLOv8 by Ultralytics: https://docs.ultralytics.com/models/yolov8/
+- Face model weights: https://github.com/lindevs/yolov8-face
