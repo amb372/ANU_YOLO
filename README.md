@@ -16,7 +16,7 @@ A collection of YOLO-based scripts and environment setups for face and object de
 ---
 
 ## Project Overview
-This repository provides scripts for running YOLOv8-based face and object detection on images and videos. The main script, `yolo_face.py`, detects faces using a YOLOv8 model and outputs annotated images or videos with bounding boxes and confidence scores.
+This repository provides scripts for running YOLOv8-based face and object detection on images and videos. The main scripts, `object.py` and `yolo_face.py`, detects objects and faces using a YOLOv8n model and its retrained model and outputs annotated images or videos with bounding boxes and confidence scores, respectively. This introduces the newcomer to various ML concepts.
 
 ---
 
