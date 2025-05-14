@@ -70,7 +70,7 @@ After rebooting, continue with the steps below.
 ### 2. Clone the Repository and Set Up the Environment
 
 ```bash
-git clone https://www.github.com/<your_username>/ANU_YOLO
+git clone https://www.github.com/amb372/ANU_YOLO
 cd ANU_YOLO
 chmod +x install_env.sh
 ./install_env.sh # Installs Miniconda and everything that you do not need to worry about
